@@ -68,6 +68,7 @@ in
       nixos.dux-shell # Dux Shell + dux-greeter (greetd)
       nixos.bongo-keyfeed # masked key feed for the Bongo Cat plugin
       nixos.protect-barrior # Nix-Protect-Barrior security layer
+      nixos.ai-privacy # AI privacy proxy: redacts secrets in AI API requests
       # nixos.sddm # unwired: dux-greeter replaces SDDM (sddm.nix kept)
     ];
 
