@@ -117,7 +117,12 @@ in
     # Ollama Service (Optimized for RTX 5080 16GB)
     services.ollama = {
       enable = true;
-      package = unstablePkgs.ollama-cuda;
+      # 0.40.17 is needed for inkling-2-mini; nixos-unstable still has 0.40.16.
+      # Built for the RTX 5080 only (sm_120) to keep the CUDA build short.
+      package = unstablePkgs.callPackage ../../pkgs/ollama/package.nix {
+        acceleration = "cuda";
+        cudaArches = [ "sm_120" ];
+      };
       host = "0.0.0.0";
       port = 11434;
       environmentVariables = {
