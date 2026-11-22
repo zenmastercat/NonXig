@@ -22,8 +22,8 @@
           ignoreDups = true;
           share = true;
         };
-        # pasted commands that contain "# comments" run instead of erroring
-        setOptions = [ "INTERACTIVE_COMMENTS" "AUTO_CD" ];
+        # INTERACTIVE_COMMENTS: pasted commands with "# comments" run; CORRECT: offer fixes for mistyped commands
+        setOptions = [ "INTERACTIVE_COMMENTS" "AUTO_CD" "CORRECT" ];
         # uv tools (graphify), same as the old fish conf.d snippet
         envExtra = ''
           export PATH="$HOME/.local/bin:$PATH"
@@ -33,6 +33,8 @@
           precmd() { vcs_info }
           zstyle ':vcs_info:git:*' formats ' %F{yellow}(%b)%f'
           setopt PROMPT_SUBST
+          # autocorrect question: y = use fix, n = keep, a = abort, e = edit
+          SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f? [nyae] '
           PROMPT='%F{green}%n@%m%f %F{blue}%~%f''${vcs_info_msg_0_} %# '
         '';
       };
