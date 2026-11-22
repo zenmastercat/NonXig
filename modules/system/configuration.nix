@@ -247,8 +247,8 @@
       "https://cache.nixos-cuda.org/" # Your existing CUDA cache
     ];
     trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrA/PkbE84pW03oToM4a432Q="
-      "cache.nixos-cuda.org-1:2hhlatXA9C9gld3u0N+J85z0dZ/9/Q16Z03l5w9d2d0="
+      # "cache.nixos.org-1:6NCHdD59X431o0gWypbMrA/PkbE84pW03oToM4a432Q=" # fake key, unwired 2026-11-17
+      # "cache.nixos-cuda.org-1:2hhlatXA9C9gld3u0N+J85z0dZ/9/Q16Z03l5w9d2d0=" # fake key, unwired 2026-11-17
     ];
   };
   
@@ -372,17 +372,22 @@
     services.printing.enable = true;
     services.openssh.enable = true;
 
+    programs.appimage = {
+      enable = true;
+      binfmt = true; # Allows executing ./file.AppImage directly
+    };
+
     users.users = {
       lucas = {
         isNormalUser = true;
         description = "Lucas";
-        extraGroups = [ "audio" "networkmanager" "wheel" "docker" "vboxusers" "render" "video" "lpadmin" ];
+        extraGroups = [ "audio" "networkmanager" "wheel" "docker" "vboxusers" "render" "video" "lpadmin" "input"];
         packages = with pkgs; [ mousepad thunderbird ];
       };
       lucas-Thinkpad = {
         isNormalUser = true;
         description = "lucas-Thinkpad";
-        extraGroups = [ "audio" "networkmanager" "wheel" "render" "video" ];
+        extraGroups = [ "audio" "networkmanager" "wheel" "render" "video" "input"];
         packages = with pkgs; [ firefox vscodium ];
       };
       guest = {

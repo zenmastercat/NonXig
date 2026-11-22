@@ -85,6 +85,9 @@
     # Unstable Packages for the overlay
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # T3 Pinning
+    nixpkgs-t3.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     # Home-manager
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -94,6 +97,18 @@
     # CachyOS Kernel Optimized for PC
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel";
+    };
+
+    # Own kernel fitted to this PC (CachyOS + BORE, ThinLTO, -march=native, trimmed modules)
+    # Keeps its own nixpkgs pin on purpose: do not add a "follows" here.
+    optimized-kernel = {
+      url = "github:zenmastercat/optimized-kernel";
+    };
+
+    # Security layer: build gate, daemon hardening, network barrier, repair/audit
+    nix-protect-barrior = {
+      url = "github:zenmastercat/Nix-Protect-Barrior";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Noctalia Desktop Shell
@@ -112,6 +127,20 @@
     anthropic-fonts = {
       url = "github:matthieuhuguet/anthropic-fonts";
       flake = false;
+    };
+
+    # Hermes Agent (Nous Research), the same version OpenBot uses
+    hermes-agent.url = "github:NousResearch/hermes-agent/v0.22.7";
+
+    # Dux Shell (replaces Noctalia) and its greetd login screen (replaces SDDM).
+    # Built from nixpkgs-unstable: they need Go 1.27.
+    dms = {
+      url = "github:duxlabs-dev/dux-shell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    dank-greeter = {
+      url = "github:duxlabs-dev/dux-greeter";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Caelestia Shell

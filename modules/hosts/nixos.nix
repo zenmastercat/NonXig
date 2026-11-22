@@ -60,11 +60,15 @@ in
       nixos.auto-updates
       nixos.applications
       nixos.additional-services
+      nixos.yggdrasil # Yggdrasil mesh network (incoming blocked)
       nixos.ros
       nixos.fish
       nixos.mango
       nixos.anthropic-fonts
-      nixos.sddm
+      nixos.dux-shell # Dux Shell + dux-greeter (greetd)
+      nixos.bongo-keyfeed # masked key feed for the Bongo Cat plugin
+      nixos.protect-barrior # Nix-Protect-Barrior security layer
+      # nixos.sddm # unwired: dux-greeter replaces SDDM (sddm.nix kept)
     ];
 
     # 3. Home Manager Configuration (Moved inside NixOS module)
@@ -79,6 +83,7 @@ in
           homeManager.kitty
           homeManager.mango
           homeManager.anthropic-fonts
+          homeManager.dux-shell
         ];
       };
     };
@@ -92,6 +97,7 @@ in
       homeManager.kitty
       homeManager.mango
       homeManager.anthropic-fonts
+      homeManager.dux-shell
     ];
   };
 }

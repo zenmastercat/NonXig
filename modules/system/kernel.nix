@@ -72,15 +72,19 @@
         # ─── KERNEL SELECTION ──────────────────────────────────────────
     # Uses lib.mkDefault so specialisations can override it cleanly without errors
     # boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_xanmod_latest;
-    boot.kernelPackages = lib.mkDefault (
-      pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v3.extend (final: prev: {
-        kernel = prev.kernel.override {
-          structuredExtraConfig = with lib.kernel; {
-            DEBUG_INFO_BTF = lib.mkForce no;
-          };
-        };
-      })
-    );
+    # Previous default, now the "cachyos" boot entry below:
+    # boot.kernelPackages = lib.mkDefault (
+    #   pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v3.extend (final: prev: {
+    #     kernel = prev.kernel.override {
+    #       structuredExtraConfig = with lib.kernel; {
+    #         DEBUG_INFO_BTF = lib.mkForce no;
+    #       };
+    #     };
+    #   })
+    # );
+
+    # Own kernel from github:zenmastercat/optimized-kernel (BTF is off there too)
+    boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_optimized;
 
     # ─── NVIDIA & GRAPHICS OPTIMIZATION ──────────────────────────
     hardware.graphics = {
@@ -108,7 +112,12 @@
       };
       open = true;
       powerManagement.enable = false; # Disabled to prevent clock downshifting during gaming/LLMs
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      # package = config.boot.kernelPackages.nvidiaPackages.latest;
+      # Own driver (newest NVIDIA release, fitted to the RTX 5080) with the optimized
+      # kernel; the cachyos and stable boot entries keep nixpkgs' tested driver.
+      package =
+        config.boot.kernelPackages.nvidiaPackages.optimized
+          or config.boot.kernelPackages.nvidiaPackages.latest;
     };
 
     # ─── PERFORMANCE & STABILITY TWEAKS ──────────────────────────
@@ -121,14 +130,36 @@
 
     hardware.cpu.intel.updateMicrocode = true;
 
+    # ─── /boot SPACE ──────────────────────────────────────────────
+    # The 1 GB ESP fits only one generation with three kernels (~507 MB).
+    # The cachyos and stable entries below are the fallbacks instead.
+    # Overrides configurationLimit = 3 in configuration.nix (left unchanged).
+    boot.loader.systemd-boot.configurationLimit = lib.mkForce 1;
+
     # ─── SPECIALISATIONS ──────────────────────────────────────────
     specialisation = {
-      zen = {
+      # Fallback: the CachyOS kernel you used before (full module set)
+      cachyos = {
         configuration = {
-          system.nixos.tags = [ "zen-kernel" ];
-          boot.kernelPackages = pkgs.linuxPackages_zen;
+          system.nixos.tags = [ "cachyos-kernel" ];
+          boot.kernelPackages =
+            pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v3.extend (final: prev: {
+              kernel = prev.kernel.override {
+                structuredExtraConfig = with lib.kernel; {
+                  DEBUG_INFO_BTF = lib.mkForce no;
+                };
+              };
+            });
         };
       };
+      # Unwired for /boot space (1 GB ESP; each entry is ~170 MB because the
+      # NVIDIA firmware is in the initrd). Uncomment to bring it back.
+      # zen = {
+      #   configuration = {
+      #     system.nixos.tags = [ "zen-kernel" ];
+      #     boot.kernelPackages = pkgs.linuxPackages_zen;
+      #   };
+      # };
       stable = {
         configuration = {
           system.nixos.tags = [ "stable-kernel" ];

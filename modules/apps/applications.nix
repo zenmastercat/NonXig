@@ -91,10 +91,14 @@ let
   inherit (config.flake.modules) nixos;
 in
 {
-  flake.modules.nixos.applications = { pkgs, lib, ... }: {
+  flake.modules.nixos.applications = { pkgs, lib, inputs, ... }: {
     imports = [
       nixos.styupideasyapps
       nixos.kitty
+      nixos.t3code
+      nixos.openbot
+      nixos.herdr
+      nixos.hermes
     ];
 
     fonts.packages = with pkgs; [

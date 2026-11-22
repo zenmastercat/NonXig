@@ -97,6 +97,11 @@
     nixpkgs.overlays = [
       inputs.nix-ros-overlay.overlays.default
 
+      inputs.nix-cachyos-kernel.overlays.pinned
+
+      # Adds pkgs.linuxPackages_optimized
+      inputs.optimized-kernel.overlays.default
+
       (final: prev: {
         rosPackages = prev.rosPackages // {
           humble = prev.rosPackages.humble.overrideScope (rosFinal: rosPrev: {

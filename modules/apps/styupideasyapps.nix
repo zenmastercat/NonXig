@@ -35,6 +35,11 @@
 
       appimage-run
 
+      pkgs.octaveFull
+
+      pkgs.bilibili
+
+      pkgs.zoom-us
     ];
   };
 }
