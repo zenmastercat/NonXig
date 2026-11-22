@@ -62,7 +62,7 @@ in
       nixos.additional-services
       nixos.yggdrasil # Yggdrasil mesh network (incoming blocked)
       nixos.ros
-      nixos.fish
+      nixos.zsh # zsh replaces fish (fish.nix kept, unwired)
       nixos.mango
       nixos.anthropic-fonts
       nixos.dux-shell # Dux Shell + dux-greeter (greetd)
@@ -78,9 +78,9 @@ in
       backupFileExtension = "backup";
       users.lucas = {
         imports = [
-          homeManager.fish
+          homeManager.zsh
           homeManager.myprofile
-          homeManager.kitty
+          homeManager.foot
           homeManager.mango
           homeManager.anthropic-fonts
           homeManager.dux-shell
@@ -92,9 +92,9 @@ in
   # Standalone Home Manager target (if building HM separately outside NixOS rebuilds)
   configurations.homeManager.myprofile.module = {
     imports = [
-      homeManager.fish
+      homeManager.zsh
       homeManager.myprofile
-      homeManager.kitty
+      homeManager.foot
       homeManager.mango
       homeManager.anthropic-fonts
       homeManager.dux-shell

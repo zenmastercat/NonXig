@@ -94,7 +94,7 @@ in
   flake.modules.nixos.applications = { pkgs, lib, inputs, ... }: {
     imports = [
       nixos.styupideasyapps
-      nixos.kitty
+      nixos.foot # foot replaces kitty (kitty.nix kept, unwired)
       nixos.t3code
       nixos.openbot
       nixos.herdr

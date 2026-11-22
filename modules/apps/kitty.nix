@@ -11,7 +11,7 @@
           size = 12;
         };
         settings = {
-          shell = "${pkgs.fish}/bin/fish";
+          shell = "${pkgs.zsh}/bin/zsh";
           background_opacity = "0.75";
           confirm_os_window_close = 0;
         };

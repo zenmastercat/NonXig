@@ -8,7 +8,7 @@ NixOS configuration (flake + flake-parts, one file per aspect under `modules/`),
 - **Security:** [Nix-Protect-Barrior](https://github.com/zenmastercat/Nix-Protect-Barrior): build gate, Nix daemon hardening, local-only ports, store repair and daily audit (`modules/system/protect-barrior.nix`).
 - **Yggdrasil:** encrypted mesh network (`modules/services/yggdrasil.nix`). Three public peers in Singapore and Hong Kong, private key kept in `/var/lib/yggdrasil` (never in the config), no LAN auto-peering, and every new incoming connection on `ygg0` dropped. To host something over Yggdrasil, add its port to `yggdrasilAllowedTCPPorts`.
 - **Bongo Cat key feed:** lets the Dux Shell Bongo Cat plugin react to typing without putting the user in the `input` group; letters, digits and symbols are all sent as one key (`modules/desktop/bongo-keyfeed.nix`).
-- Apps, Fish, Kitty, ROS overlay, Ollama/Docker services, VirtualBox, auto-updates.
+- Apps, Zsh, Foot, ROS overlay, Ollama/Docker services, VirtualBox, auto-updates.
 
 ## Use
 ```sh

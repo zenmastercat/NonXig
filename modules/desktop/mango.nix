@@ -70,8 +70,8 @@
         monitor_rule=name:^HDMI-A-1$,width:3840,height:2160,refresh:144.001,x:1920,y:0,scale:1.75
 
         # ===== MangoWM default keybindings (mango assets/config.conf) =====
-        # Only change from upstream: rofi -> Dux Shell launcher, foot -> alacritty
-        # (rofi and foot are not installed).
+        # Only change from upstream: rofi -> Dux Shell launcher (terminal is foot, as upstream)
+        # (rofi is not installed).
         # key name refer to `xev` or `wev` command output,
         # mod keys name: super,ctrl,alt,shift,none
 
@@ -80,7 +80,7 @@
 
         # menu and terminal
         bind=Alt,space,spawn,dms ipc call spotlight toggle
-        bind=Alt,Return,spawn,alacritty
+        bind=Alt,Return,spawn,foot
 
         # exit
         bind=SUPER,m,quit
