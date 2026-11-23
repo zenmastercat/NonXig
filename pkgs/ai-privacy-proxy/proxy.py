@@ -177,7 +177,7 @@ class Redactor:
 
     def json(self, x, hits):
         if isinstance(x, dict):
-            if x.get("type") in self.SKIP_TYPES:
+            if isinstance(x.get("type"), str) and x.get("type") in self.SKIP_TYPES:
                 return x
             return {k: (v if k in self.SKIP_KEYS and not isinstance(v, (dict, list)) else self.json(v, hits))
                     for k, v in x.items()}
