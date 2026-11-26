@@ -99,6 +99,7 @@ in
       nixos.openbot
       nixos.herdr
       nixos.hermes
+      nixos.search-linux # Search (Linux port), see modules/apps/search-linux.nix
     ];
 
     fonts.packages = with pkgs; [

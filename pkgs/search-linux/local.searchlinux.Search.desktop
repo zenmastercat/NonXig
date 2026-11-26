@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Search (Linux port)
+GenericName=Web Browser
+Comment=A small, quiet browser in the spirit of Search for the Mac (unofficial port)
+Exec=search-linux %U
+Icon=local.searchlinux.Search
+Terminal=false
+Categories=Network;WebBrowser;
+MimeType=text/html;x-scheme-handler/http;x-scheme-handler/https;
+StartupNotify=true
+StartupWMClass=local.searchlinux.Search
+Keywords=browser;web;internet;search;
